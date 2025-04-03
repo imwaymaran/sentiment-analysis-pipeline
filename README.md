@@ -3,14 +3,16 @@
 You are a growth analyst at a Vancouver-based consulting firm called [Bernardino Group](https://en.wikipedia.org/wiki/Bernardino_of_Siena#:~:text=Saint%20Bernardino%20is%20the%20Roman,problems%20involving%20the%20chest%20area.). Your manager is spear-heading the completion of a new analytical tool which will automatically label if a review is positive, neutral, negative, or irrelevant (aka [sentiment](https://en.wikipedia.org/wiki/Sentiment_analysis)). The release schedule for this product is ambitious as your company would like to be able to advertise this service to potential clients as soon as possible. You will be kicking off the completion of this first milestone by independently implementing a minimal-viable product. This will be a Python pipeline that ingests review data and interfaces with the Open AI API to automatically label each review.
 
 For example, if you were checking the reviews for a wearable ring from SengLinks that tracks heart rate, the following would be examples of the mentioned sentiment:
+
 * positive: *I love this ring, I use it all the time when working out.*
 * neutral: *It's an ok ring. Some features could be better but for the price it's fine.*
 * negative: *Absolutely terrible ring. The green light that the ring emitted kept attracting mosquitos.*
-* irrelevant: *I like strawberry ice cream because its the best.* 
+* irrelevant: *I like strawberry ice cream because its the best.*
 
 You are tasked with creating a minimal pipeline that reads a JSON file of reviews and generates an output file that contains one of these sentiment labels for each respective review.
 
 For example, if your input file contains the following array of reviews:
+
 ```
 [
  "this ring smells weird, don't recomend",
@@ -23,6 +25,7 @@ For example, if your input file contains the following array of reviews:
 ```
 
 Your program would output the following list of labels:
+
 ```
 ["negative", "positive", "positive", "neutral", "irrelevant", "negative"]
 ```
@@ -40,6 +43,7 @@ Your company has also provided you an API key **(which you must keep secret)** t
 To work on this project you must first configure your `ds` conda environment by following the listed steps below. By the end of these steps, you will have a functioning environment that contains your hidden API key. Please follow these instructions closely or your project will not function correctly.
 
 1) Activate your conda environment via the following terminal command:
+
 ```bash
 conda activate ds
 ```
@@ -53,32 +57,36 @@ conda env config vars set OPENAI_API_KEY="your_api_key"
 ```
 
 4) Deactivate and reactive your environment by running the following commands in your terminal
+
 ```bash
 conda deactivate ds
 conda activate ds
 ```
 
 5) Next, install the `openai` package by running the following pip command:
+
 ```bash
 pip install openai
 ```
 
 6) Run the `test_package.py` module to check if your openai package is functioning correctly.
+
 ```bash
 python test_package.py
 ```
 
-You should see your terminal output `SUCCESS!`. 
+You should see your terminal output `SUCCESS!`.
 
-These instructions have been based off of documentation from the [OpenAI API](https://platform.openai.com/docs/libraries?desktop-os=windows&language=python). 
+These instructions have been based off of documentation from the [OpenAI API](https://platform.openai.com/docs/libraries?desktop-os=windows&language=python).
 
 There are three Python files and one markdown file which you will modify in this repository to complete this project:
+
 * cleaner.py
 * metrics.py
 * main.py
 * writeup.md
 
-The files with the prefix test_ (i.e. test_package.py, test_label.py, test_visualize.py, and test_run.py) are intended for you to test your code to ensure that all project requirements are complete. Do not modify the code in these files. Otherwise, you will not be able to check that your code is functioning correctly.
+The files with the prefix test_(i.e. test_package.py, test_label.py, test_visualize.py, and test_run.py) are intended for you to test your code to ensure that all project requirements are complete. Do not modify the code in these files. Otherwise, you will not be able to check that your code is functioning correctly.
 
 Lastly, remove any **ellipses** or **pass** keywords that you come across in your code. These are placeholder values.
 
@@ -87,6 +95,7 @@ Lastly, remove any **ellipses** or **pass** keywords that you come across in you
 This module contains a function that you will implement to interface with the `gpt-4o-mini` language model. It will take in a list of string reviews, and pass this list to the open ai API via the `chat.completions.create()` method.
 
 While the `prompt` variable has been created for you, you will generate your own `system_prompt` which will influence the large-language-models output. Use the following [guide](https://platform.openai.com/docs/guides/prompt-engineering) to determine your system prompt. Some general tips from this guide include:
+
 * Provide examples to help the model generate correct labels
 * Provide helpful context-setting (e.g. "You are an expert in interpreting human sentiment across cultures.")
 
@@ -94,7 +103,7 @@ Since this prompt will most likely be a multi-line string, we recommend using tr
 
 This function will return the output of the large language model expressed as a list of sentiments with no extraneous blank lines (ex: `["positive", "positive", "negative", ...]`)
 
-However, this function should return a string that states `"Wrong input. text must be an array of strings."` if an empty list is provided or if a list containing incorrect data-types is passed. 
+However, this function should return a string that states `"Wrong input. text must be an array of strings."` if an empty list is provided or if a list containing incorrect data-types is passed.
 
 To test this module, open a terminal in VSCode. Go to the Terminal tab in the top menu and select "New Terminal." Then run the following command:
 
@@ -145,28 +154,30 @@ If you are encountering a `429` error, read the error message carefully to deter
 **Tokens-Per-Minute (TPM) (40,000 limit)**
 
 Then you should:
+
 * Potentially modify your system prompt so that your input string size is greatly less than 40,000 tokens and the output token size is minimal (50 tokens).
 * Wait one minute for the token "budget" to reset as too many users are making large token submissions at once
 
 **Requests-Per-Minute (RPM) (100 limit)**
 
 Then you should:
+
 * Wait one minute for the request "budget" to reset as too many users are making requests
 
 **Requests-Per-Day (RPD) (1500 limit)**
 
 Then you should:
+
 * Wait till the next day for the request "budget" to reset as we've hit the limit for requests for the day.
 
-Most importantly, this should motivate you to **only run tests when needed**. Do not make API calls unless you've ensured that all proper parameters are in place for you to receive a meaningful response from OpenAI. 
+Most importantly, this should motivate you to **only run tests when needed**. Do not make API calls unless you've ensured that all proper parameters are in place for you to receive a meaningful response from OpenAI.
 
-## Submission 
+## Submission
 
 The due date for this project is `04/21`.
 
-To begin work on this project, you will download this template code and push it to your GitHub repository. 
+To begin work on this project, you will download this template code and push it to your GitHub repository.
 
 Be sure to test as you code in order to verify that your functions are working correctly. If you see that all of your tests are evaluating to a green check-mark (✅) for a specific module, that means your code is ready to go, and you can move on to the next challenge.
 
 To submit this project, you will submit a link to your completed GitHub repository to Canvas.
-
