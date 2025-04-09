@@ -1,6 +1,29 @@
 from openai import OpenAI
 
 def get_sentiment(text: list) -> list:
+    """
+    Analyzes the sentiment of each product review in a list using the OpenAI API.
+
+    The function sends the provided reviews to the API with instructions to classify 
+    each review into one of four labels: positive, neutral, negative, or irrelevant.
+    The API is instructed to output exactly one line per review in the format:
+    "[review_number]: [sentiment]". The function then parses this output and returns 
+    a list of sentiment labels corresponding to each review in the input order.
+
+    Parameters:
+        text (list of str): A list where each element is a product review string.
+
+    Returns:
+        list of str: A list of sentiment labels (each one being "positive", 
+                     "neutral", "negative", or "irrelevant"). If the input is invalid 
+                     (e.g., empty list or non-string elements), an error message is returned.
+    """
+
+    if not text or not all(isinstance(el, str) for el in text):
+        return "Wrong input. Text must be an array of strings."
+    
+    reviews_str = "\n".join(f"{idx+1}. {review}" for idx, review in enumerate(text))
+    
     system_prompt = """
     You are an excellent product review sentiment analyst.
     Classify each product review into one of the following labels:
@@ -23,11 +46,6 @@ def get_sentiment(text: list) -> list:
     Review: "It’s okay, not amazing but not bad." Output: [review_number]: neutral  
     Review: "Tastes awful. Would not recommend." Output: [review_number]: negative
     """
-
-    if not text or not all(isinstance(el, str) for el in text):
-        return "Wrong input. Text must be an array of strings."
-    
-    reviews_str = "\n".join(f"{idx+1}. {review}" for idx, review in enumerate(text))
 
     prompt = f"""
     You will be given {len(text)} numbered reviews. 
