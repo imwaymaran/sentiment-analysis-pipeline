@@ -10,7 +10,7 @@ def get_sentiment(text: list) -> list:
     "[review_number]: [sentiment]". The function then parses this output and returns 
     a list of sentiment labels corresponding to each review in the input order.
 
-    Parameters:
+    Args:
         text (list of str): A list where each element is a product review string.
 
     Returns:
