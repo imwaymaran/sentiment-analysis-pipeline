@@ -2,21 +2,18 @@ from openai import OpenAI
 
 def get_sentiment(text: list) -> list:
     """
-    Analyzes the sentiment of each product review in a list using the OpenAI API.
+    Analyzes product reviews for sentiment using the OpenAI API.
 
-    The function sends the provided reviews to the API with instructions to classify 
-    each review into one of four labels: positive, neutral, negative, or irrelevant.
-    The API is instructed to output exactly one line per review in the format:
-    "[review_number]: [sentiment]". The function then parses this output and returns 
-    a list of sentiment labels corresponding to each review in the input order.
+    Each review is classified into one of four categories: positive, neutral, 
+    negative, or irrelevant. The API returns one line per review, which is parsed 
+    into a list of sentiment labels in the original order.
 
     Args:
-        text (list of str): A list where each element is a product review string.
+        text (list of str): List of product review strings.
 
     Returns:
-        list of str: A list of sentiment labels (each one being "positive", 
-                     "neutral", "negative", or "irrelevant"). If the input is invalid 
-                     (e.g., empty list or non-string elements), an error message is returned.
+        list of str: Sentiment labels ("positive", "neutral", "negative", or "irrelevant").
+                     Returns an error message if the input is empty or invalid.
     """
 
     if not text or not all(isinstance(el, str) for el in text):
